@@ -10,8 +10,10 @@
                 "UNICODE",
                 "_UNICODE"
             ],
-            "intelliSenseMode": "msvc-x64",
-            "compilerPath": "D:/Software/\"Program Files\"/mingw32/bin"
+            "intelliSenseMode": "gcc-x86",
+            "compilerPath": "C:\\cygwin64\\bin",
+            "cStandard": "c11",
+            "cppStandard": "c++20"
         }
     ],
     "version": 4
