@@ -35,9 +35,65 @@ class Tree:
                     
     #   Delete from a binary search tree
     def delete(self, ele):
-        pass
+        prev, current = self.search(ele)
 
-    #   These methods can be applied to any tree, not necessarily binary
+        if current.right == current.left == None:
+            if prev.left == current:
+                prev.left = None
+                
+            elif prev.right == current:
+                prev.right = None
+
+            elif prev == None:
+                current = None
+
+        elif current.right != None and current.left == None:
+           
+            replaced = current.right.val
+            current.right = None
+            current.val = replaced
+            
+        elif current.left != None and current.right == None:
+            replaced = current.left.val
+            current.left = None
+            current.val = replaced
+            
+        else:
+            past, pres = self.minimum(current.right, current)
+            replaced = pres.val
+            self.delete(pres.val)
+            current.val = replaced
+
+    #   Finds the Inorder successor of a node or the min val in
+    def minimum(self, node, prev = None):
+        current = node
+        self.past = prev
+
+        while current.left:
+            self.past = current
+            current = current.left
+        
+        return (self.past, current)
+
+
+    def search(self, ele):
+        current = self.root
+        if ele == current.val:
+            return None, current
+        while current:
+            if ele > current.val:
+                self.past = current
+                current = current.right
+                if current.val == ele:
+                    return (self.past, current)
+            else:
+                self.past = current
+                current = current.left
+                if current.val == ele:
+                    return self.past, current
+            
+
+    #   These methods can be applied to any binary tree
 
     #   Delete from a binary tree
     def del2(self, ele):
@@ -51,20 +107,20 @@ class Tree:
         
 
         #   Searching for the element to be deleted
-        self.search(self.root, ele)
+        self.search2(self.root, ele)
         self.hold.val = replaced
         
 
     #   Element search in binary tree (helper function)
-    def search(self, root, ele):
+    def search2(self, root, ele):
 
         if root:
             if root.val == ele:
                 self.hold = root
                 return
             
-            self.search(root.left, ele)
-            self.search(root.right, ele)
+            self.search2(root.left, ele)
+            self.search2(root.right, ele)
 
     #   Add elements anywhere
     def addLeft(self, ele):
@@ -129,5 +185,7 @@ t.insert(1)
 t.insert(5)
 t.insert(7)
 t.insert(9)
-t.del2(3)
+t.insert(10)
+t.delete(6)
+
 t.preorder(root)
